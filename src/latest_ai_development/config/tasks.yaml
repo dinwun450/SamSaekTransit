@@ -1,0 +1,42 @@
+traffic_data_task:
+  description: >
+    Monitor and analyze real-time traffic data to identify incidents and provide actionable insights.
+  expected_output: >
+    A brief summary on traffic incidents from a list, and recommend actions based on the analysis to the motorist who decides to go through the affected roadway.
+  agent: traffic_data_agent
+  output_file: traffic_data_output.txt
+
+transit_land_task:
+  description: >
+    Gather and analyze transit data from transit.land to provide a list of lines and stops from a specific public transportation system. {content}
+  expected_output: >
+    A detailed overview of transit routes from a list such as route short names, long names, and associated stops (if the user wanted to query the stops).
+  agent: transit_land_agent
+
+transit_land_departures_task:
+  description: >
+    Provide real-time transit departures based on the user's input of stop ID and the agency's onestop ID.
+    Require the user to provide the stop ID and the agency's onestop ID as inputs, then use these to return the real-time departures data.
+  expected_output: >
+    A detailed overview of upcoming transit departures from a list, including details such as the time of departure, route information, and any delays.
+  agent: transit_land_departures_agent
+
+nearby_transit_task:
+  description: >
+    Provide information about nearby transit options, including routes and stops.
+    Require the user to provide their location or a nearby transit query.
+    Do not display nearby transit options unless the user explicitly asks for it.
+    If the user specifies {needs_nearby_transit}, then you can use the location to find nearby transit options.
+  expected_output: >
+    A list of nearby transit options with details on routes, stops, and schedules
+  agent: nearby_transit_agent
+
+transit_agency_search_task:
+  description: >
+    Search and retrieve detailed information about transit agencies using Exa search.
+    If you have existing data such as traffic, nearby transit data, or transit.land data, don't use the Exa search API and instead type N/A in the query and display the existing data.
+    Do not display the search results and links unless the user asks for a query explicitly.
+    If the user specifies {exa_search_results}, then you can display the search results and links.
+  expected_output: >
+    A detailed overview of search results from a list, based on the query relating to transit agencies. Provide links if available.
+  agent: transit_agency_search_agent
